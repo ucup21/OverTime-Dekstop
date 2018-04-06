@@ -119,7 +119,9 @@ public class OverTimeView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuPegawaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPegawaiActionPerformed
-                
+        PegawaiView pv = new PegawaiView();
+        pv.show();
+        jDesktopPane1.add(pv);        
     }//GEN-LAST:event_menuPegawaiActionPerformed
 
     private void menuLemburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLemburActionPerformed

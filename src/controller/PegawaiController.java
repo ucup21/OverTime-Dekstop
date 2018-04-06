@@ -6,9 +6,11 @@
 package controller;
 
 import dao.JabatanDAO;
+import dao.PegawaiMiiDAO;
 import entities.Jabatan;
+import entities.PegawaiMii;
+import java.util.Date;
 import java.util.List;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,11 +18,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author hp
  */
-public class JabatanController {
-
+public class PegawaiController {
+    private final PegawaiMiiDAO miiDAO;
     private final JabatanDAO jdao;
 
-    public JabatanController() {
+    public PegawaiController() {
+        this.miiDAO = new PegawaiMiiDAO();
         this.jdao = new JabatanDAO();
     }
 
@@ -28,11 +31,16 @@ public class JabatanController {
         DefaultTableModel model = new DefaultTableModel(header, 0);
         int i = 1;
         for (Object data : datas) {
-            Jabatan jabatan = (Jabatan) data;
+            PegawaiMii mii = (PegawaiMii) data;
             Object[] data1 = {
                 i++,
-                jabatan.getKdJabatan(),
-                jabatan.getNamaJabatan()
+                mii.getNip(),
+                mii.getKdJabatan().getNamaJabatan(),
+                mii.getNama(),
+                mii.getJk(),
+                mii.getAlamat(),
+                mii.getTglLahir(),
+                mii.getTmptLahir()
             };
             model.addRow(data1);
         }
@@ -40,25 +48,26 @@ public class JabatanController {
     }
 
     public void bindingAll(JTable table, String[] header) {
-        bindingTable(table, header, jdao.getAll());
+        bindingTable(table, header, miiDAO.getAll());
     }
     
     public void bindingSearch(JTable table, String[] header, String category, String cari) {
-       bindingTable(table, header, jdao.search(category, cari));
+       bindingTable(table, header, miiDAO.search(category, cari));
     }
     
-    public boolean save(String kdJabatan, String namaJabatan, boolean isSave) {
-        Jabatan jabatan = new Jabatan();
-        jabatan.setKdJabatan(kdJabatan);
-        jabatan.setNamaJabatan(namaJabatan);
+    public boolean save(Integer nip, String kdJabatan, String nama, String jk,
+            String alamat, Date tgllahir, String tmptLahir, boolean isSave) {
+        PegawaiMii mii = new PegawaiMii();
+        String[] jId = kdJabatan.split(" ");
+        mii.setKdJabatan((Jabatan) jdao.getById(jId[0]));
         if (isSave) {
-            return jdao.insert(jabatan);
+            return miiDAO.insert(mii);
         }
-        return jdao.update(jabatan);
+        return miiDAO.update(mii);
     }
     
      public boolean delete(String kdJabatan) {
-        return jdao.delete(kdJabatan);
+        return miiDAO.delete(kdJabatan);
     }
 
 }
