@@ -46,5 +46,13 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:XE</property>
     <property name="hibernate.connection.username">system</property>
     <property name="hibernate.connection.password">26september</property>
+    <property name="hibernate.connection.autocommit">true</property>
+    <property name="hibernate.default_schema">hr</property>
+    <mapping class="entities.Detail"/>
+    <mapping class="entities.DetailLembur"/>
+    <mapping class="entities.DetailPK"/>
+    <mapping class="entities.Jabatan"/>
+    <mapping class="entities.JenisLembur"/>
+    <mapping class="entities.PegawaiMii"/>
   </session-factory>
 </hibernate-configuration>
