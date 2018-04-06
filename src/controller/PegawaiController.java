@@ -9,8 +9,8 @@ import dao.JabatanDAO;
 import dao.PegawaiMiiDAO;
 import entities.Jabatan;
 import entities.PegawaiMii;
-import java.util.Date;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -51,23 +51,45 @@ public class PegawaiController {
         bindingTable(table, header, miiDAO.getAll());
     }
     
-    public void bindingSearch(JTable table, String[] header, String category, String cari) {
-       bindingTable(table, header, miiDAO.search(category, cari));
-    }
     
-    public boolean save(Integer nip, String kdJabatan, String nama, String jk,
-            String alamat, Date tgllahir, String tmptLahir, boolean isSave) {
+    
+    public  void bindingsearch(JTable table, String[] header,String category, String search){
+        String cari = search;
+            if (category.equalsIgnoreCase("kdJabatan")) {
+                Jabatan j = (Jabatan) jdao.search("namaJabatan", cari).get(0);
+                cari = j.getKdJabatan();
+            } 
+        bindingTable(table, header, miiDAO.search(category, cari));
+        
+    }
+    public boolean save(String nip, String kdJabatan, String nama, String jk,
+            String alamat, String tglLahir, String tmptLahir, boolean isSave) {
         PegawaiMii mii = new PegawaiMii();
-        String[] jId = kdJabatan.split(" ");
-        mii.setKdJabatan((Jabatan) jdao.getById(jId[0]));
+        mii.setNip(Long.valueOf(nip));
+        mii.setKdJabatan(new Jabatan(kdJabatan));        
+        mii.setNama(nama);
+        mii.setJk(jk);
+        mii.setAlamat(alamat);
+        mii.setTglLahir(new java.sql.Date(new Long(tglLahir)));
+        mii.setTmptLahir(tmptLahir);
+        String[] jKd = kdJabatan.split(" ");
+        mii.setKdJabatan((Jabatan) jdao.getById(jKd[0]));
         if (isSave) {
             return miiDAO.insert(mii);
         }
         return miiDAO.update(mii);
     }
     
-     public boolean delete(String kdJabatan) {
-        return miiDAO.delete(kdJabatan);
+     public boolean delete(String nip) {
+        PegawaiMii mii = new PegawaiMii();
+        return miiDAO.delete(Long.parseLong(nip+""));
+    }
+     
+     public void loadJabatan(JComboBox jComboBox) {
+        jdao.getAll().stream().map((object) -> (Jabatan) object).forEachOrdered((jab) -> {
+            jComboBox.addItem(jab.getKdJabatan()+" - "
+                    +jab.getNamaJabatan());
+        });
     }
 
 }

@@ -39,7 +39,7 @@ public class PegawaiMiiDAO implements InterfaceDAO{
      */
     
     public boolean delete(Object object) {
-        return fdao.delete(PegawaiMii.class,object.hashCode());
+        return fdao.delete(PegawaiMii.class,Long.parseLong(object+""));
     }
 
     /**
@@ -50,11 +50,11 @@ public class PegawaiMiiDAO implements InterfaceDAO{
      * @return fdao memanggil fungsi getAll pada class fdao
      */
     public List<Object> search(String category, String search) {
-        return fdao.getAll("FROM Pegawai_MII WHERE " + category + " LIKE '%" + search + "%'");
+        return fdao.getAll("FROM PegawaiMii WHERE " + category + " LIKE '%" + search + "%'");
     }
 
     public Object getById(String Id) {
-        return fdao.getById("FROM Pegawai_MII where nip='" + Id + "'");
+        return fdao.getById("FROM PegawaiMii where nip='" + Id + "'");
     }
 
     /**
@@ -68,7 +68,7 @@ public class PegawaiMiiDAO implements InterfaceDAO{
     }
 
     public List<Object> getAll() {
-        return fdao.getAll("FROM Pegawai_MII");
+        return fdao.getAll("FROM PegawaiMii");
     }
     
 }

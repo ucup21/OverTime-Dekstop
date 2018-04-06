@@ -6,6 +6,8 @@
 package view;
 
 import controller.PegawaiController;
+import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,9 +15,9 @@ import controller.PegawaiController;
  */
 public class PegawaiView extends javax.swing.JInternalFrame {
 
-    private String header[] = {"No", "NIP", "Nama", "Jabatan", "Jenis Kelamin",
+    private final String header[] = {"No", "NIP", "Jabatan", "Nama", "Jenis Kelamin",
         "Alamat", "Tanggal Lahir","Tempat Lahir"};
-    private String headerTable[] = {"nip", "nama", "idJabatan", "jk",
+    private final String headerTable[] = {"nip", "kdJabatan", "nama", "jk",
         "alamat", "tglLahir", "tmptLahir"};
     public PegawaiController pc;
 
@@ -26,6 +28,7 @@ public class PegawaiView extends javax.swing.JInternalFrame {
         initComponents();
         pc = new PegawaiController();
         pc.bindingAll(tblPegawai, header);
+        pc.loadJabatan(cmbJabatan);
         reset();
     }
 
@@ -49,7 +52,6 @@ public class PegawaiView extends javax.swing.JInternalFrame {
         txtNip = new javax.swing.JTextField();
         btnSimpan = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
-        txtKodeJabatan = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtNama = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -59,8 +61,14 @@ public class PegawaiView extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         txtAlamat = new javax.swing.JTextField();
         txtJK = new javax.swing.JTextField();
+        txtTglLahir = new com.toedter.calendar.JDateChooser();
+        cmbJabatan = new javax.swing.JComboBox<>();
 
-        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nomor Induk Pegawai", "Kode Jabatan", "Nama", "Jenis Kelamin", "Alamat", "Tempat Lahir" }));
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+
+        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nomor Induk Pegawai", "Jabatan", "Nama", "Jenis Kelamin", "Alamat", "Tempat Lahir" }));
 
         txtCari.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,7 +137,25 @@ public class PegawaiView extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Tanggal Lahir");
 
+        txtTempatLahir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTempatLahirActionPerformed(evt);
+            }
+        });
+
         jLabel7.setText("Alamat");
+
+        txtAlamat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAlamatActionPerformed(evt);
+            }
+        });
+
+        txtJK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtJKActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -144,12 +170,12 @@ public class PegawaiView extends javax.swing.JInternalFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txtNama, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtKodeJabatan, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNip, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtJK, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
+                            .addComponent(txtJK, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+                            .addComponent(cmbJabatan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(34, 34, 34)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -157,8 +183,9 @@ public class PegawaiView extends javax.swing.JInternalFrame {
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE))
                         .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtTempatLahir, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                            .addComponent(txtAlamat)))
+                            .addComponent(txtTempatLahir)
+                            .addComponent(txtAlamat)
+                            .addComponent(txtTglLahir, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -170,40 +197,46 @@ public class PegawaiView extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNip, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNip, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                            .addComponent(txtKodeJabatan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbJabatan))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtTempatLahir)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 7, Short.MAX_VALUE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtTglLahir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTempatLahir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtJK, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(106, 106, 106))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtJK, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -211,8 +244,8 @@ public class PegawaiView extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(143, 143, 143)
-                .addComponent(cmbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(116, 116, 116)
+                .addComponent(cmbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
@@ -236,8 +269,8 @@ public class PegawaiView extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -248,20 +281,22 @@ public class PegawaiView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCariActionPerformed
 
     private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
-
+       pc.bindingsearch(tblPegawai, header,
+                headerTable[cmbKategori.getSelectedIndex()],
+                txtCari.getText());        
     }//GEN-LAST:event_btnCariActionPerformed
 
     private void tblPegawaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPegawaiMouseClicked
-//        txtNip.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 1) + "");        
-//        txtNama.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 2) + "");
-//        txtKodeJabatan.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 3) + "");
-//        txtJK.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 4) + "");
-//        txtAlamat.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 5) + "");
-////        txtTanggalLahir.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 4)+"");
-//        txtTempatLahir.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 7) + "");
-//        txtNip.setEnabled(false);
-//        btnSimpan.setEnabled(true);
-//        btnHapus.setEnabled(true);
+        txtNip.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 1)+"");
+//        txtKodeJabatan.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 2) + "");
+        txtNama.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 3) + "");
+        txtJK.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 4) + "");
+        txtAlamat.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 5) + "");
+        txtTglLahir.setDate((Date) tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 6));
+        txtTempatLahir.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 7) + "");
+        txtNip.setEnabled(false);
+        btnSimpan.setEnabled(true);
+        btnHapus.setEnabled(true);
     }//GEN-LAST:event_tblPegawaiMouseClicked
 
     private void txtNipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNipActionPerformed
@@ -269,23 +304,58 @@ public class PegawaiView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNipActionPerformed
 
     private void txtNipKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNipKeyPressed
-//        btnSimpan.setEnabled(true);
-//        btnHapus.setEnabled(true);
+        btnSimpan.setEnabled(true);
+        btnHapus.setEnabled(true);
     }//GEN-LAST:event_txtNipKeyPressed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        boolean hasil = false;
+        hasil = pc.save(txtNip.getText(), cmbJabatan.getSelectedItem().toString(),
+                txtNama.getText(), txtJK.getText(), txtAlamat.getText(),
+                txtTglLahir.getDate().getTime() + "", txtTempatLahir.getText(),
+                txtNip.isEnabled());
 
+        String pesan = "Gagal menyimpan data";
+        if (hasil) {
+            pesan = "Berhasil menyimpan data";
+        }
+        JOptionPane.showMessageDialog(this, pesan);
+        pc.bindingAll(tblPegawai, header);
+        reset();
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
-
+        int i= JOptionPane.showConfirmDialog(this, "Yakin Mau Dihapus?");
+        System.out.println(i);
+        if(i==0){
+        String pesan = "Gagal Hapus";
+        boolean hasil = pc.delete(txtNip.getText());
+        if (hasil) pesan="Berhasil Hapus";
+        JOptionPane.showMessageDialog(this, pesan); 
+            pc.bindingAll(tblPegawai, header);
+            
+        }
+        reset();
     }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void txtAlamatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAlamatActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAlamatActionPerformed
+
+    private void txtTempatLahirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTempatLahirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTempatLahirActionPerformed
+
+    private void txtJKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtJKActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtJKActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCari;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnSimpan;
+    private javax.swing.JComboBox<String> cmbJabatan;
     private javax.swing.JComboBox<String> cmbKategori;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -300,22 +370,21 @@ public class PegawaiView extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtAlamat;
     private javax.swing.JTextField txtCari;
     private javax.swing.JTextField txtJK;
-    private javax.swing.JTextField txtKodeJabatan;
     private javax.swing.JTextField txtNama;
     private javax.swing.JTextField txtNip;
     private javax.swing.JTextField txtTempatLahir;
+    private com.toedter.calendar.JDateChooser txtTglLahir;
     // End of variables declaration//GEN-END:variables
     public void reset() {
         txtNip.setText("");        
         txtNama.setText("");
-        txtKodeJabatan.setText("");
+        cmbJabatan.setSelectedIndex(0);
         txtJK.setText("");
         txtAlamat.setText("");
-//        txtTanggalLahir.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 4)+"");
         txtTempatLahir.setText("");
         cmbKategori.setSelectedIndex(0);
         txtCari.setText("");
-        txtKodeJabatan.setEnabled(true);
+//        txtKodeJabatan.setEnabled(true);
         btnSimpan.setEnabled(false);
         btnHapus.setEnabled(false);
     }
