@@ -11,6 +11,8 @@ import dao.PegawaiMiiDAO;
 import entities.DetailLembur;
 import entities.JenisLembur;
 import entities.PegawaiMii;
+import java.util.Date;
+
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -31,12 +33,12 @@ public class DetailLemburController {
         this .lemburDAO = new JenisLemburDAO();
     }
     
-    public boolean insert(String kdDetailLembur, String kdLembur, Long nip, String tgl, boolean isSave){
+    public boolean insert(String kdDetailLembur, String kdLembur, Long nip, Date tgl, boolean isSave){
         DetailLembur detailLembur = new DetailLembur();
         detailLembur.setKdDetailLembur(kdDetailLembur);
         detailLembur.setKdLembur(new JenisLembur(kdLembur));
         detailLembur.setNip(new PegawaiMii(nip));
-        detailLembur.setTglLembur(new java.sql.Date(new Long(tgl)));
+        detailLembur.setTglLembur(tgl);
         if (isSave)return dAO.insert(detailLembur);
         return dAO.update(detailLembur);
     }

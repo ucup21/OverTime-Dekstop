@@ -147,7 +147,9 @@ public class OverTimeView extends javax.swing.JFrame {
     }//GEN-LAST:event_menuPegawaiActionPerformed
 
     private void menuLemburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLemburActionPerformed
-        // TODO add your handling code here:
+        JenisLemburView jlv = new JenisLemburView();
+        jlv.show();
+        jDesktopPane1.add(jlv);
     }//GEN-LAST:event_menuLemburActionPerformed
 
     private void menujabatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menujabatanActionPerformed
