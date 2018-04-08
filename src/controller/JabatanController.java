@@ -54,7 +54,7 @@ public class JabatanController {
         if (isSave) {
             return jdao.insert(jabatan);
         }
-        return jdao.update(jabatan);
+        return jdao.insert(jabatan);
     }
     
      public boolean delete(String kdJabatan) {

@@ -40,6 +40,8 @@ public class OverTimeView extends javax.swing.JFrame {
         menujabatan = new javax.swing.JMenuItem();
         menuLembur = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        menuDetailLembur = new javax.swing.JMenuItem();
+        menuDetailLemburJabatan = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
 
         jMenu3.setText("jMenu3");
@@ -65,7 +67,7 @@ public class OverTimeView extends javax.swing.JFrame {
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 589, Short.MAX_VALUE)
+            .addGap(0, 634, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Master");
@@ -100,6 +102,23 @@ public class OverTimeView extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Transaksi");
+
+        menuDetailLembur.setText("Detail Lembur");
+        menuDetailLembur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDetailLemburActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuDetailLembur);
+
+        menuDetailLemburJabatan.setText("Detail Lembur Jabatan");
+        menuDetailLemburJabatan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDetailLemburJabatanActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuDetailLemburJabatan);
+
         jMenuBar1.add(jMenu2);
 
         jMenu8.setText("Report");
@@ -115,9 +134,7 @@ public class OverTimeView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 45, Short.MAX_VALUE))
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -126,7 +143,7 @@ public class OverTimeView extends javax.swing.JFrame {
     private void menuPegawaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPegawaiActionPerformed
         PegawaiView pv = new PegawaiView();
         pv.show();
-        jDesktopPane1.add(pv);        
+        jDesktopPane1.add(pv);
     }//GEN-LAST:event_menuPegawaiActionPerformed
 
     private void menuLemburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLemburActionPerformed
@@ -138,6 +155,18 @@ public class OverTimeView extends javax.swing.JFrame {
         jv.show();
         jDesktopPane1.add(jv);
     }//GEN-LAST:event_menujabatanActionPerformed
+
+    private void menuDetailLemburJabatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDetailLemburJabatanActionPerformed
+        DetailView detailView = new DetailView();
+        detailView.show();
+        jDesktopPane1.add(detailView);
+    }//GEN-LAST:event_menuDetailLemburJabatanActionPerformed
+
+    private void menuDetailLemburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDetailLemburActionPerformed
+        DetailLemburView dlv = new DetailLemburView();
+        dlv.show();
+        jDesktopPane1.add(dlv);
+    }//GEN-LAST:event_menuDetailLemburActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,6 +215,8 @@ public class OverTimeView extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem menuDetailLembur;
+    private javax.swing.JMenuItem menuDetailLemburJabatan;
     private javax.swing.JMenuItem menuLembur;
     private javax.swing.JMenuItem menuPegawai;
     private javax.swing.JMenuItem menujabatan;

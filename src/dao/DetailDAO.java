@@ -51,7 +51,8 @@ public class DetailDAO implements InterfaceDAO{
      * @return fdao memanggil fungsi getAll pada class fdao
      */
     public List<Object> search(String category, String search) {
-        return fdao.getAll("FROM Detail WHERE " + category + " LIKE '%" + search + "%'");
+//        return fdao.getAll("FROM Detail WHERE " + category + " LIKE '%" + search + "%'");
+        return fdao.getAll("FROM Detail d WHERE d.detailPK.kdJabatan = " + category + " LIKE '%" + search + "%'");
     }
 
     public Object getById(String Id) {

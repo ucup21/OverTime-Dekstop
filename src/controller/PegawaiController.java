@@ -80,9 +80,8 @@ public class PegawaiController {
         return miiDAO.update(mii);
     }
     
-     public boolean delete(String nip) {
-        PegawaiMii mii = new PegawaiMii();
-        return miiDAO.delete(Long.parseLong(nip+""));
+     public boolean delete(String nip) {        
+        return miiDAO.delete(nip);
     }
      
      public void loadJabatan(JComboBox jComboBox) {
