@@ -9,6 +9,7 @@ import dao.DetailDAO;
 import dao.JabatanDAO;
 import dao.JenisLemburDAO;
 import entities.Detail;
+import entities.DetailPK;
 import entities.Jabatan;
 import entities.JenisLembur;
 import java.util.List;
@@ -25,6 +26,7 @@ public class DetailController {
     private final DetailDAO dao;
     private final JabatanDAO jdao;
     private final JenisLemburDAO jenisLemburDAO;
+    DetailPK DetailPKController;
 
     public DetailController() {
         this.dao = new DetailDAO();
@@ -68,13 +70,14 @@ public class DetailController {
 
     public boolean save(String kdJabatan, String kdLembur, String tarif,boolean isSave) {
         Detail detail = new Detail();
+        detail.setDetailPK(new DetailPK(kdJabatan, kdLembur));
         detail.setJabatan(new Jabatan(kdJabatan));
         detail.setJenisLembur(new JenisLembur(kdLembur));
         detail.setTarif(Long.valueOf(tarif));
-        String[] jKd = kdJabatan.split(" ");
-        detail.setJabatan((Jabatan) jdao.getById(jKd[0]));        
-        String[] jnKd = kdJabatan.split(" ");
-        detail.setJenisLembur((JenisLembur) jenisLemburDAO.getById(jnKd[0]));
+//        String[] jKd = kdJabatan.split(" ");
+//        detail.setJabatan((Jabatan) jdao.getById(jKd[0]));        
+//        String[] jnKd = kdJabatan.split(" ");
+//        detail.setJenisLembur((JenisLembur) jenisLemburDAO.getById(jnKd[0]));
         if (isSave) {
             return dao.insert(detail);
         }

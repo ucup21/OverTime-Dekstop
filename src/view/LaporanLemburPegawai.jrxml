@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2eb6fef6-1016-4080-ac0c-5ef7a2ca6e4c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     DETAIL."TARIF" AS DETAIL_TARIF,
+     DETAIL_LEMBUR."NIP" AS DETAIL_LEMBUR_NIP,
+     DETAIL_LEMBUR."TGL_LEMBUR" AS DETAIL_LEMBUR_TGL_LEMBUR,
+     JENIS_LEMBUR."LAMA_LEMBUR" AS JENIS_LEMBUR_LAMA_LEMBUR,
+     JABATAN."NAMA_JABATAN" AS JABATAN_NAMA_JABATAN,
+     PEGAWAI_MII."NAMA" AS PEGAWAI_MII_NAMA
+FROM
+     "HR"."PEGAWAI_MII" PEGAWAI_MII INNER JOIN "HR"."DETAIL_LEMBUR" DETAIL_LEMBUR ON PEGAWAI_MII."NIP" = DETAIL_LEMBUR."NIP"
+     INNER JOIN "HR"."JENIS_LEMBUR" JENIS_LEMBUR ON DETAIL_LEMBUR."KD_LEMBUR" = JENIS_LEMBUR."KD_LEMBUR"
+     INNER JOIN "HR"."DETAIL" DETAIL ON JENIS_LEMBUR."KD_LEMBUR" = DETAIL."KD_LEMBUR"
+     INNER JOIN "HR"."JABATAN" JABATAN ON DETAIL."KD_JABATAN" = JABATAN."KD_JABATAN"
+     AND JABATAN."KD_JABATAN" = PEGAWAI_MII."KD_JABATAN"]]>
+	</queryString>
+	<field name="DETAIL_TARIF" class="java.math.BigDecimal"/>
+	<field name="DETAIL_LEMBUR_NIP" class="java.math.BigDecimal"/>
+	<field name="DETAIL_LEMBUR_TGL_LEMBUR" class="java.sql.Timestamp"/>
+	<field name="JENIS_LEMBUR_LAMA_LEMBUR" class="java.math.BigDecimal"/>
+	<field name="JABATAN_NAMA_JABATAN" class="java.lang.String"/>
+	<field name="PEGAWAI_MII_NAMA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="125" y="19" width="316" height="38" uuid="9e9d44be-2857-45d4-b5d3-f53aa5eac325"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Laporan Lembur Pegawai]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="455" y="0" width="100" height="20" uuid="834af82c-9559-49e7-b628-aa11667fff06"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="3" width="62" height="20" uuid="2309a0b5-7129-4ca9-acf3-d1c61049402c"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[NIP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="3" width="84" height="20" uuid="6166fa94-da45-4c73-980b-97a81235476f"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="3" width="86" height="20" uuid="2183863c-bb48-4ca9-8b75-24c58739eeac"/>
+				<text><![CDATA[Jabatan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="297" y="3" width="78" height="20" uuid="bb972d69-5cbd-4688-8d88-fbffc92dae7e"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="3" width="65" height="20" uuid="5d2a12a2-6faa-4c55-b7dc-1887fa5b4d99"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Lama Lembur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="493" y="3" width="62" height="20" uuid="fdba0b42-c5b8-4db5-932d-51865f1e5e43"/>
+				<text><![CDATA[Tarif]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="62" height="20" uuid="e7f485cf-31f3-4d70-933d-4b71f4aabac1"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DETAIL_LEMBUR_NIP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="82" y="0" width="84" height="20" uuid="b79db6bd-9e11-4ed9-bdbd-4d7f46ac263f"/>
+				<textFieldExpression><![CDATA[$F{PEGAWAI_MII_NAMA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="297" y="0" width="78" height="20" uuid="f08940ee-b711-47fb-868e-9450c94c1c8e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DETAIL_LEMBUR_TGL_LEMBUR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="65" height="20" uuid="a61a2777-026b-4b06-8f2b-ed8958d7f5b6"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{JENIS_LEMBUR_LAMA_LEMBUR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="493" y="0" width="61" height="20" uuid="0702ab09-d891-4403-87a0-63c06c300090"/>
+				<textFieldExpression><![CDATA[$F{DETAIL_TARIF}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="188" y="0" width="86" height="20" uuid="ade69f5f-c162-4282-9f16-d2c785d5fcc2"/>
+				<textFieldExpression><![CDATA[$F{JABATAN_NAMA_JABATAN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="423" y="11" width="80" height="20" uuid="2d704b35-3e56-42d6-b39f-5a31f6816300"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="503" y="11" width="40" height="20" uuid="0a8f769c-75a8-400a-a45f-ff28b6ae86c9"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

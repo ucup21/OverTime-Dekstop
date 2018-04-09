@@ -22,8 +22,8 @@ public class DetailView extends javax.swing.JInternalFrame {
      */
     public DetailView() {
         initComponents();
-        DetailController dc = new DetailController();
-        dc.bindingAll(tblDetil, header);
+        detailController = new DetailController();
+        detailController.bindingAll(tblDetil, header);
     }
 
     /**
@@ -247,9 +247,8 @@ public class DetailView extends javax.swing.JInternalFrame {
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         boolean hasil = false;
-        hasil = detailController.save(txtKodeJabatan.getText(), txtKdLembur.getText(),txtTarif.getText(),
-            txtKodeJabatan.isEnabled());
-
+        hasil = detailController.save(txtKodeJabatan.getText(), txtKdLembur.getText(), txtTarif.getText(),
+                  txtKodeJabatan.isEnabled());
         String pesan = "Gagal menyimpan data";
         if (hasil) {
             pesan = "Berhasil menyimpan data";
