@@ -46,6 +46,14 @@ public class Detail implements Serializable {
     public Detail() {
     }
 
+//    public Detail(Long tarif, Jabatan jabatan, JenisLembur jenisLembur) {
+//        this.tarif = tarif;
+//        this.jabatan = jabatan;
+//        this.jenisLembur = jenisLembur;
+//    }
+    
+    
+
     public Detail(DetailPK detailPK) {
         this.detailPK = detailPK;
     }

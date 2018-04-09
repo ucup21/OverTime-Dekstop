@@ -57,42 +57,54 @@ public class DetailController {
 
     public void bindingSearch(JTable table, String[] header, String category, String search) {
         String cari = search;
-//        if (category.equalsIgnoreCase("kdJabatan")) {
-//            Jabatan j = (Jabatan) dao.search("namaJabatan", cari).get(0);
-//            cari = j.getKdJabatan();
-//        } else if (category.equalsIgnoreCase("kdJenisLembur")) {
-//            JenisLembur jenisLembur = (JenisLembur) dao.search("lamaLembur", cari).get(0);
-//            cari = jenisLembur.getKdLembur();
-//        }
+        if (category.equalsIgnoreCase("kd_jabatan")) {
+            Jabatan j = (Jabatan) jdao.search("namaJabatan", cari).get(0);
+            cari = j.getKdJabatan();
+        } else if (category.equalsIgnoreCase("kdLembur")) {
+            JenisLembur jenisLembur = (JenisLembur) jenisLemburDAO.search("lamaLembur", cari).get(0);
+            cari = jenisLembur.getKdLembur();
+        }
         bindingTable(table, header, dao.search(category, cari));
 
     }
 
-    public boolean save(String kdJabatan, String kdLembur, String tarif,boolean isSave) {
+    public boolean save(String kdJabatan, String kdLembur, String tarif, boolean isSave) {
         Detail detail = new Detail();
-        detail.setDetailPK(new DetailPK(kdJabatan, kdLembur));
-        detail.setJabatan(new Jabatan(kdJabatan));
-        detail.setJenisLembur(new JenisLembur(kdLembur));
+//        detail.setJabatan(new Jabatan(kdJabatan));
+//        detail.setJenisLembur(new JenisLembur(kdLembur));
         detail.setTarif(Long.valueOf(tarif));
-//        String[] jKd = kdJabatan.split(" ");
-//        detail.setJabatan((Jabatan) jdao.getById(jKd[0]));        
-//        String[] jnKd = kdJabatan.split(" ");
-//        detail.setJenisLembur((JenisLembur) jenisLemburDAO.getById(jnKd[0]));
+        String[] jKd = kdJabatan.split(" ");
+        detail.setJabatan((Jabatan) jdao.getById(jKd[0]));
+        System.out.println(jKd[0]);
+        String[] jnKd = kdLembur.split(" ");
+        detail.setJenisLembur((JenisLembur) jenisLemburDAO.getById(jnKd[0]));
+        detail.setDetailPK(new DetailPK(jKd[0], jnKd[0]));
         if (isSave) {
             return dao.insert(detail);
         }
         return dao.update(detail);
+
     }
 
-    public boolean delete(String kdJabatan) {
-        return dao.delete(kdJabatan);
+    public boolean delete(String kdJabatan, String kdLembur) {
+        DetailPK detailPK = new DetailPK();
+        detailPK.setKdJabatan(kdJabatan);
+        detailPK.setKdLembur(kdLembur);
+        return dao.delete(detailPK);
     }
 
-//    public void loadJabatan(JComboBox jComboBox) {
-//        jdao.getAll().stream().map((object) -> (Jabatan) object).forEachOrdered((jab) -> {
-//            jComboBox.addItem(jab.getKdJabatan() + " - "
-//                    + jab.getNamaJabatan());
-//        });
-//    }
+    public void loadJabatan(JComboBox jComboBox) {
+        jdao.getAll().stream().map((object) -> (Jabatan) object).forEachOrdered((jab) -> {
+            jComboBox.addItem(jab.getKdJabatan() + " - "
+                    + jab.getNamaJabatan());
+        });
+    }
+    public void loadLembur(JComboBox jComboBox) {
+        jenisLemburDAO.getAll().stream().map((object) -> (JenisLembur) object).forEachOrdered((jen) -> {
+            jComboBox.addItem(jen.getKdLembur()+ " - "
+                    + jen.getLamaLembur());
+        });
+    }
+
 
 }

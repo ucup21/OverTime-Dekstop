@@ -6,6 +6,7 @@
 package dao;
 
 import entities.Detail;
+import entities.DetailPK;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -52,7 +53,7 @@ public class DetailDAO implements InterfaceDAO{
      */
     public List<Object> search(String category, String search) {
 //        return fdao.getAll("FROM Detail WHERE " + category + " LIKE '%" + search + "%'");
-        return fdao.getAll("FROM Detail d WHERE d.detailPK.kdJabatan = " + category + " LIKE '%" + search + "%'");
+        return fdao.getAll("FROM Detail WHERE " + category + " LIKE '%" + search + "%'");
     }
 
     public Object getById(String Id) {

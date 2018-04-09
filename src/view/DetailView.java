@@ -6,6 +6,7 @@
 package view;
 
 import controller.DetailController;
+import entities.DetailPK;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,8 +16,9 @@ import javax.swing.JOptionPane;
 public class DetailView extends javax.swing.JInternalFrame {
 
     private final String header[] = {"NO", "Jabatan", "Lama Lembur(Jam)", "Tarif"};
-    private final String[] headerTable={"kdJabatan","kd_lembur","tarif"};
+    private final String[] headerTable={"kd_jabatan","kd_lembur","tarif"};
     DetailController detailController ;
+    
     /**
      * Creates new form DetailView
      */
@@ -24,6 +26,8 @@ public class DetailView extends javax.swing.JInternalFrame {
         initComponents();
         detailController = new DetailController();
         detailController.bindingAll(tblDetil, header);
+        detailController.loadJabatan(cmbKdJabatan);
+        detailController.loadLembur(cmbKdJenisLembur);
     }
 
     /**
@@ -43,12 +47,12 @@ public class DetailView extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtKodeJabatan = new javax.swing.JTextField();
-        txtKdLembur = new javax.swing.JTextField();
         btnSimpan = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
         txtTarif = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        cmbKdJabatan = new javax.swing.JComboBox<>();
+        cmbKdJenisLembur = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setIconifiable(true);
@@ -91,23 +95,6 @@ public class DetailView extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Lama Lembur/Jam");
 
-        txtKodeJabatan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtKodeJabatanActionPerformed(evt);
-            }
-        });
-        txtKodeJabatan.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtKodeJabatanKeyPressed(evt);
-            }
-        });
-
-        txtKdLembur.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtKdLemburActionPerformed(evt);
-            }
-        });
-
         btnSimpan.setText("Simpan");
         btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,43 +124,44 @@ public class DetailView extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtTarif, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtKodeJabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtKdLembur, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(202, 202, 202)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSimpan))
-                .addGap(101, 101, 101))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cmbKdJabatan, 0, 178, Short.MAX_VALUE)
+                            .addComponent(cmbKdJenisLembur, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(155, 155, 155)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnSimpan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtTarif, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(49, 49, 49))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnSimpan, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                        .addComponent(jLabel1))
-                    .addComponent(txtKodeJabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnHapus, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(txtKdLembur)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtTarif, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 20, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbKdJabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(cmbKdJenisLembur, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTarif, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -181,18 +169,19 @@ public class DetailView extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(146, 146, 146)
-                .addComponent(cmbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCari)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(cmbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCari))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -200,9 +189,9 @@ public class DetailView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCari, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCari, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -224,31 +213,20 @@ public class DetailView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCariActionPerformed
 
     private void tblDetilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetilMouseClicked
-        txtKodeJabatan.setText(tblDetil.getValueAt(tblDetil.getSelectedRow(), 1) + "");
-        txtKdLembur.setText(tblDetil.getValueAt(tblDetil.getSelectedRow(), 2) + "");
+        cmbKdJabatan.setSelectedItem(tblDetil.getValueAt(tblDetil.getSelectedRow(), 1) + "");
+        cmbKdJenisLembur.setSelectedItem(tblDetil.getValueAt(tblDetil.getSelectedRow(), 2) + "");
         txtTarif.setText(tblDetil.getValueAt(tblDetil.getSelectedRow(), 3)+"");
-        txtKodeJabatan.setEnabled(false);
+        cmbKdJabatan.setEnabled(false);
         btnSimpan.setEnabled(true);
         btnHapus.setEnabled(true);
     }//GEN-LAST:event_tblDetilMouseClicked
 
-    private void txtKodeJabatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKodeJabatanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtKodeJabatanActionPerformed
-
-    private void txtKodeJabatanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKodeJabatanKeyPressed
-        btnSimpan.setEnabled(true);
-        btnHapus.setEnabled(true);
-    }//GEN-LAST:event_txtKodeJabatanKeyPressed
-
-    private void txtKdLemburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKdLemburActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtKdLemburActionPerformed
-
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         boolean hasil = false;
-        hasil = detailController.save(txtKodeJabatan.getText(), txtKdLembur.getText(), txtTarif.getText(),
-                  txtKodeJabatan.isEnabled());
+//        hasil = detailController.save(txtKodeJabatan.getText() ,txtKdLembur.getText(), txtTarif.getText(),
+//                  txtKdLembur.isEnabled());
+        hasil = detailController.save(cmbKdJabatan.getSelectedItem().toString()  ,cmbKdJenisLembur.getSelectedItem().toString(), txtTarif.getText(),
+                  cmbKdJabatan.isEnabled());
         String pesan = "Gagal menyimpan data";
         if (hasil) {
             pesan = "Berhasil menyimpan data";
@@ -262,7 +240,8 @@ public class DetailView extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(this, "Apakah anda yakin akan menghapus data ini?");
         if (i == 0) {
             String pesan = "Gagal Hapus";
-            boolean hasil = detailController.delete(txtKodeJabatan.getText());
+            boolean hasil;
+            hasil = detailController.delete(cmbKdJabatan.getSelectedItem().toString(), cmbKdJenisLembur.getSelectedItem().toString());
             if (hasil) {
                 pesan = "Berhasil Hapus";
             }
@@ -270,6 +249,7 @@ public class DetailView extends javax.swing.JInternalFrame {
             detailController.bindingAll(tblDetil, header);
 
         }
+//        System.out.println();
         reset();
     }//GEN-LAST:event_btnHapusActionPerformed
 
@@ -283,6 +263,8 @@ public class DetailView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JComboBox<String> cmbKategori;
+    private javax.swing.JComboBox<String> cmbKdJabatan;
+    private javax.swing.JComboBox<String> cmbKdJenisLembur;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -290,16 +272,14 @@ public class DetailView extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblDetil;
     private javax.swing.JTextField txtCari;
-    private javax.swing.JTextField txtKdLembur;
-    private javax.swing.JTextField txtKodeJabatan;
     private javax.swing.JTextField txtTarif;
     // End of variables declaration//GEN-END:variables
     public void reset() {
-        txtKodeJabatan.setText("");
-        txtKdLembur.setText("");
+        
+        cmbKdJabatan.setSelectedIndex(0);
+        cmbKdJenisLembur.setSelectedIndex(0);
         txtTarif.setText("");
         cmbKategori.setSelectedIndex(0);
-        txtKodeJabatan.setEnabled(true);
         btnSimpan.setEnabled(false);
         btnHapus.setEnabled(false);
     }
