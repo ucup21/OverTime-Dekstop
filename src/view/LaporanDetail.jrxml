@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0b6c9f3d-3ecb-4cc2-bd7c-0c3240f43c36">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nip" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     PEGAWAI_MII."NAMA" AS PEGAWAI_MII_NAMA,
+     JABATAN."NAMA_JABATAN" AS JABATAN_NAMA_JABATAN,
+     DETAIL_LEMBUR."TGL_LEMBUR" AS DETAIL_LEMBUR_TGL_LEMBUR,
+     JENIS_LEMBUR."LAMA_LEMBUR" AS JENIS_LEMBUR_LAMA_LEMBUR,
+     DETAIL."TARIF" AS DETAIL_TARIF
+FROM
+     "HR"."JABATAN" JABATAN INNER JOIN "HR"."PEGAWAI_MII" PEGAWAI_MII ON JABATAN."KD_JABATAN" = PEGAWAI_MII."KD_JABATAN"
+     INNER JOIN "HR"."DETAIL_LEMBUR" DETAIL_LEMBUR ON PEGAWAI_MII."NIP" = DETAIL_LEMBUR."NIP"
+     INNER JOIN "HR"."JENIS_LEMBUR" JENIS_LEMBUR ON DETAIL_LEMBUR."KD_LEMBUR" = JENIS_LEMBUR."KD_LEMBUR"
+     INNER JOIN "HR"."DETAIL" DETAIL ON JENIS_LEMBUR."KD_LEMBUR" = DETAIL."KD_LEMBUR"
+     AND JABATAN."KD_JABATAN" = DETAIL."KD_JABATAN"
+WHERE
+     PEGAWAI_MII."NIP" = $P{nip}]]>
+	</queryString>
+	<field name="PEGAWAI_MII_NAMA" class="java.lang.String"/>
+	<field name="JABATAN_NAMA_JABATAN" class="java.lang.String"/>
+	<field name="DETAIL_LEMBUR_TGL_LEMBUR" class="java.sql.Timestamp"/>
+	<field name="JENIS_LEMBUR_LAMA_LEMBUR" class="java.math.BigDecimal"/>
+	<field name="DETAIL_TARIF" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="122" y="18" width="316" height="38" uuid="3eb765d2-d64b-4be3-8a11-b323d45dc203"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Laporan Lembur Pegawai]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="f2007c81-49fa-4e54-860b-f217e6f67455"/>
+				<textFieldExpression><![CDATA[$P{nip}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="455" y="0" width="100" height="20" uuid="175926ad-841f-4d71-a472-acfb9f8a185d"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="5766e708-af7d-48dc-a003-85428343a750"/>
+				<text><![CDATA[Laporan dari NIP:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="dc85e43c-c572-4ff1-8ec7-db4083c24f8a"/>
+				<text><![CDATA[Nama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="117" y="0" width="100" height="20" uuid="95554ba7-abb3-430d-992f-bba4e36d4726"/>
+				<text><![CDATA[Jabatan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="238" y="0" width="100" height="20" uuid="672c34c5-b05e-4d54-9f3a-b04de835e06f"/>
+				<text><![CDATA[Tanggal Lembur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="357" y="0" width="81" height="20" uuid="188152ee-8ab7-45d1-98df-3997c3300b97"/>
+				<text><![CDATA[Lama Lembur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="100" height="20" uuid="a5f41901-6365-4df8-813e-4ff319461baa"/>
+				<text><![CDATA[Tarif]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="238" y="0" width="100" height="20" uuid="fb1e4b70-cb9e-44d0-98d9-8f56ac881d9e"/>
+				<textFieldExpression><![CDATA[$F{DETAIL_LEMBUR_TGL_LEMBUR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="117" y="0" width="100" height="20" uuid="f58e75b0-4704-4f68-9169-a1e3e6c7e784"/>
+				<textFieldExpression><![CDATA[$F{JABATAN_NAMA_JABATAN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="0d76486c-7215-4d5e-b34f-dc18d66ad492"/>
+				<textFieldExpression><![CDATA[$F{PEGAWAI_MII_NAMA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="357" y="0" width="81" height="20" uuid="268f1f4e-91d9-4740-bfe8-c38973cfc506"/>
+				<textFieldExpression><![CDATA[$F{JENIS_LEMBUR_LAMA_LEMBUR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="ee80df72-a35a-4a4a-aed9-4f6d3b06e013"/>
+				<textFieldExpression><![CDATA[$F{DETAIL_TARIF}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

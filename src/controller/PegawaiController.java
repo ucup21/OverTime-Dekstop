@@ -9,6 +9,7 @@ import dao.JabatanDAO;
 import dao.PegawaiMiiDAO;
 import entities.Jabatan;
 import entities.PegawaiMii;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
@@ -19,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
  * @author hp
  */
 public class PegawaiController {
+
     private final PegawaiMiiDAO miiDAO;
     private final JabatanDAO jdao;
 
@@ -27,11 +29,14 @@ public class PegawaiController {
         this.jdao = new JabatanDAO();
     }
 
-    public void bindingTable(JTable table, String[] header, List<Object> datas) {
+    public List<String> bindingTable(JTable table, String[] header, List<Object> datas) {
+        List<String> dataJabatan = new ArrayList<>();
         DefaultTableModel model = new DefaultTableModel(header, 0);
         int i = 1;
         for (Object data : datas) {
             PegawaiMii mii = (PegawaiMii) data;
+            dataJabatan.add(" - ;" + mii.getKdJabatan().getKdJabatan() + " - " + mii.getKdJabatan().getNamaJabatan());
+
             Object[] data1 = {
                 i++,
                 mii.getNip(),
@@ -45,28 +50,31 @@ public class PegawaiController {
             model.addRow(data1);
         }
         table.setModel(model);
+        return dataJabatan;
     }
 
-    public void bindingAll(JTable table, String[] header) {
-        bindingTable(table, header, miiDAO.getAll());
+//    public void bindingAll(JTable table, String[] header) {
+//        bindingTable(table, header, miiDAO.getAll());
+//    }
+    public List<String> bindingAll(JTable table, String[] header) {
+        return bindingTable(table, header, miiDAO.getAll());
     }
-    
-    
-    
-    public  void bindingsearch(JTable table, String[] header,String category, String search){
+
+    public List<String> bindingsearch(JTable table, String[] header, String category, String search) {
         String cari = search;
-            if (category.equalsIgnoreCase("kdJabatan")) {
-                Jabatan j = (Jabatan) jdao.search("namaJabatan", cari).get(0);
-                cari = j.getKdJabatan();
-            } 
-        bindingTable(table, header, miiDAO.search(category, cari));
-        
+        if (category.equalsIgnoreCase("kdJabatan")) {
+            Jabatan j = (Jabatan) jdao.search("namaJabatan", cari).get(0);
+            cari = j.getKdJabatan();
+        }
+        return bindingTable(table, header, miiDAO.search(category, cari));
+
     }
+
     public boolean save(String nip, String kdJabatan, String nama, String jk,
             String alamat, String tglLahir, String tmptLahir, boolean isSave) {
         PegawaiMii mii = new PegawaiMii();
         mii.setNip(Long.valueOf(nip));
-        mii.setKdJabatan(new Jabatan(kdJabatan));        
+        mii.setKdJabatan(new Jabatan(kdJabatan));
         mii.setNama(nama);
         mii.setJk(jk);
         mii.setAlamat(alamat);
@@ -79,15 +87,16 @@ public class PegawaiController {
         }
         return miiDAO.update(mii);
     }
-    
-     public boolean delete(String nip) {        
+
+    public boolean delete(String nip) {
         return miiDAO.delete(nip);
     }
-     
-     public void loadJabatan(JComboBox jComboBox) {
-        jdao.getAll().stream().map((object) -> (Jabatan) object).forEachOrdered((jab) -> {
-            jComboBox.addItem(jab.getKdJabatan()+" - "
-                    +jab.getNamaJabatan());
+
+    public void loadJabatan(JComboBox jComboBox) {
+        jComboBox.addItem(" - ");
+       jdao.getAll().stream().map((object) -> (Jabatan) object).forEachOrdered((jab) -> {
+            jComboBox.addItem(jab.getKdJabatan()+ " - "
+                    + jab.getNamaJabatan());
         });
     }
 

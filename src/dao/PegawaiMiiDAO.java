@@ -20,7 +20,6 @@ public class PegawaiMiiDAO implements InterfaceDAO{
     public Session session;
     private SessionFactory factory;
     public Transaction transaction;
-
     public FunctionsDAO fdao;
 
     public PegawaiMiiDAO() {
@@ -68,7 +67,7 @@ public class PegawaiMiiDAO implements InterfaceDAO{
     }
 
     public List<Object> getAll() {
-        return fdao.getAll("FROM PegawaiMii");
+        return fdao.getAll("FROM PegawaiMii ORDER BY nip");
     }
     
 }

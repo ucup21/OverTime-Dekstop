@@ -6,7 +6,9 @@
 package view;
 
 import controller.PegawaiController;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,18 +18,20 @@ import javax.swing.JOptionPane;
 public class PegawaiView extends javax.swing.JInternalFrame {
 
     private final String header[] = {"No", "NIP", "Jabatan", "Nama", "Jenis Kelamin",
-        "Alamat", "Tanggal Lahir","Tempat Lahir"};
+        "Alamat", "Tanggal Lahir", "Tempat Lahir"};
     private final String headerTable[] = {"nip", "kdJabatan", "nama", "jk",
         "alamat", "tglLahir", "tmptLahir"};
-    public PegawaiController pc;
+    public final PegawaiController pc;
+    private List<String> datas;
 
     /**
      * Creates new form PegawaiView
      */
     public PegawaiView() {
         initComponents();
+        datas = new ArrayList<>();
         pc = new PegawaiController();
-        pc.bindingAll(tblPegawai, header);
+        datas =  pc.bindingAll(tblPegawai, header);
         pc.loadJabatan(cmbJabatan);
         reset();
     }
@@ -63,6 +67,7 @@ public class PegawaiView extends javax.swing.JInternalFrame {
         txtJK = new javax.swing.JTextField();
         txtTglLahir = new com.toedter.calendar.JDateChooser();
         cmbJabatan = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -163,19 +168,19 @@ public class PegawaiView extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtNama, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNip, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtJK, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+                    .addComponent(cmbJabatan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtNama, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNip, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtJK, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
-                            .addComponent(cmbJabatan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -186,17 +191,17 @@ public class PegawaiView extends javax.swing.JInternalFrame {
                             .addComponent(txtTempatLahir)
                             .addComponent(txtAlamat)
                             .addComponent(txtTglLahir, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(111, 111, 111)
                         .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNip, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -232,44 +237,58 @@ public class PegawaiView extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtJK, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnSimpan, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(btnHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(23, 23, 23))
+                .addGap(60, 60, 60))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45))
         );
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel8.setText("FORM PEGAWAI");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(116, 116, 116)
-                .addComponent(cmbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(btnCari)
-                .addContainerGap(104, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(102, 102, 102)
+                                .addComponent(cmbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(46, 46, 46)
+                                .addComponent(btnCari))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(260, 260, 260)
+                                .addComponent(jLabel8)))
+                        .addGap(0, 108, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel8)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCari, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -281,14 +300,20 @@ public class PegawaiView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCariActionPerformed
 
     private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
-       pc.bindingsearch(tblPegawai, header,
+//        pc.bindingsearch(tblPegawai, header,
+//                headerTable[cmbKategori.getSelectedIndex()],
+//                txtCari.getText());
+
+        datas = new ArrayList<>();
+        datas = pc.bindingsearch(tblPegawai, header,
                 headerTable[cmbKategori.getSelectedIndex()],
-                txtCari.getText());        
+                txtCari.getText());
     }//GEN-LAST:event_btnCariActionPerformed
 
     private void tblPegawaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPegawaiMouseClicked
-        txtNip.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 1)+"");
-//        txtKodeJabatan.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 2) + "");
+
+        txtNip.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 1) + "");
+        cmbJabatan.setSelectedItem(getCombo(true).get(tblPegawai.getSelectedRow()));
         txtNama.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 3) + "");
         txtJK.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 4) + "");
         txtAlamat.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 5) + "");
@@ -320,22 +345,24 @@ public class PegawaiView extends javax.swing.JInternalFrame {
             pesan = "Berhasil menyimpan data";
         }
         JOptionPane.showMessageDialog(this, pesan);
-        pc.bindingAll(tblPegawai, header);
+        datas= pc.bindingAll(tblPegawai, header);
         reset();
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
-        int i= JOptionPane.showConfirmDialog(this, "Yakin Mau Dihapus?");
+        int i = JOptionPane.showConfirmDialog(this, "Yakin Mau Dihapus?");
         System.out.println(i);
-        if(i==0){
-        String pesan = "Gagal Hapus";
-        boolean hasil = pc.delete(txtNip.getText());
-        if (hasil) pesan="Berhasil Hapus";
-        JOptionPane.showMessageDialog(this, pesan); 
+        if (i == 0) {
+            String pesan = "Gagal Hapus";
+            boolean hasil = pc.delete(txtNip.getText());
+            if (hasil) {
+                pesan = "Berhasil Hapus";
+            }
+            JOptionPane.showMessageDialog(this, pesan);
             pc.bindingAll(tblPegawai, header);
-            
+
+            reset();
         }
-        reset();
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void txtAlamatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAlamatActionPerformed
@@ -364,6 +391,7 @@ public class PegawaiView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblPegawai;
@@ -376,16 +404,31 @@ public class PegawaiView extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser txtTglLahir;
     // End of variables declaration//GEN-END:variables
     public void reset() {
-        txtNip.setText("");        
+        txtNip.setText("");
         txtNama.setText("");
         cmbJabatan.setSelectedIndex(0);
         txtJK.setText("");
         txtAlamat.setText("");
+        txtTglLahir.setDate(new Date());
         txtTempatLahir.setText("");
         cmbKategori.setSelectedIndex(0);
         txtCari.setText("");
 //        txtKodeJabatan.setEnabled(true);
         btnSimpan.setEnabled(false);
         btnHapus.setEnabled(false);
+    }
+
+    private List<String> getCombo(boolean isNamaJabatan) {
+        List<String> isi = new ArrayList<>();
+        String[] daftar = new String[datas.size()];
+        for (String data : datas) {
+            daftar = data.split(";");
+            if (isNamaJabatan) {
+                isi.add(daftar[1]);
+            } else {
+                isi.add(daftar[0]);
+            }
+        }
+        return isi;
     }
 }

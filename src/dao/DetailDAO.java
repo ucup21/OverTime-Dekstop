@@ -7,6 +7,7 @@ package dao;
 
 import entities.Detail;
 import entities.DetailPK;
+import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -41,7 +42,7 @@ public class DetailDAO implements InterfaceDAO{
      */
     
     public boolean delete(Object object) {
-        return fdao.delete(Detail.class,object.toString());
+        return fdao.delete(Detail.class, (Serializable) object);
     }
 
     /**
@@ -71,7 +72,7 @@ public class DetailDAO implements InterfaceDAO{
     }
 
     public List<Object> getAll() {
-        return fdao.getAll("FROM Detail");
+        return fdao.getAll("FROM Detail order by jabatan");
     }
     
 }

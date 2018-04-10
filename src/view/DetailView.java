@@ -7,6 +7,8 @@ package view;
 
 import controller.DetailController;
 import entities.DetailPK;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,14 +20,16 @@ public class DetailView extends javax.swing.JInternalFrame {
     private final String header[] = {"NO", "Jabatan", "Lama Lembur(Jam)", "Tarif"};
     private final String[] headerTable={"kd_jabatan","kd_lembur","tarif"};
     DetailController detailController ;
+    private List<String> datas;
     
     /**
      * Creates new form DetailView
      */
     public DetailView() {
         initComponents();
+        datas = new ArrayList<>();
         detailController = new DetailController();
-        detailController.bindingAll(tblDetil, header);
+        datas = detailController.bindingAll(tblDetil, header);
         detailController.loadJabatan(cmbKdJabatan);
         detailController.loadLembur(cmbKdJenisLembur);
     }
@@ -53,11 +57,14 @@ public class DetailView extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         cmbKdJabatan = new javax.swing.JComboBox<>();
         cmbKdJenisLembur = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
 
+        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("")));
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Detail");
 
         cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Jabatan", "Lama Lembur", "Tarif" }));
 
@@ -143,11 +150,12 @@ public class DetailView extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbKdJabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbKdJabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -164,6 +172,9 @@ public class DetailView extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18))
         );
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setText("FORM LEMBUR JABATAN");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -171,31 +182,37 @@ public class DetailView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addComponent(cmbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCari))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cmbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCari)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCari, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCari, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -207,16 +224,19 @@ public class DetailView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCariActionPerformed
 
     private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
-        detailController.bindingSearch(tblDetil, header,
+        datas = new ArrayList<>();
+        datas = detailController.bindingSearch(tblDetil, header,
             headerTable[cmbKategori.getSelectedIndex()],
             txtCari.getText());
     }//GEN-LAST:event_btnCariActionPerformed
 
     private void tblDetilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetilMouseClicked
-        cmbKdJabatan.setSelectedItem(tblDetil.getValueAt(tblDetil.getSelectedRow(), 1) + "");
-        cmbKdJenisLembur.setSelectedItem(tblDetil.getValueAt(tblDetil.getSelectedRow(), 2) + "");
+        cmbKdJabatan.setSelectedItem(getCombo(false).get(tblDetil.getSelectedRow()));
+        cmbKdJenisLembur.setSelectedItem(getCombo(true).get(tblDetil.getSelectedRow()));
+//        cmbKdJabatan.setSelectedItem(tblDetil.getValueAt(tblDetil.getSelectedRow(), 1) + "");
+//        cmbKdJenisLembur.setSelectedItem(tblDetil.getValueAt(tblDetil.getSelectedRow(), 2) + "");
         txtTarif.setText(tblDetil.getValueAt(tblDetil.getSelectedRow(), 3)+"");
-        cmbKdJabatan.setEnabled(false);
+//        cmbKdJabatan.setEnabled(false);
         btnSimpan.setEnabled(true);
         btnHapus.setEnabled(true);
     }//GEN-LAST:event_tblDetilMouseClicked
@@ -232,7 +252,7 @@ public class DetailView extends javax.swing.JInternalFrame {
             pesan = "Berhasil menyimpan data";
         }
         JOptionPane.showMessageDialog(this, pesan);
-        detailController.bindingAll(tblDetil, header);
+        datas = detailController.bindingAll(tblDetil, header);
         reset();
     }//GEN-LAST:event_btnSimpanActionPerformed
 
@@ -268,6 +288,7 @@ public class DetailView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblDetil;
@@ -282,5 +303,19 @@ public class DetailView extends javax.swing.JInternalFrame {
         cmbKategori.setSelectedIndex(0);
         btnSimpan.setEnabled(false);
         btnHapus.setEnabled(false);
+    }
+    
+    private List<String> getCombo(boolean isNamaJabatan) {
+        List<String> isi = new ArrayList<>();
+        String[] daftar = new String[datas.size()];
+        for (String data : datas) {
+            daftar = data.split(";");
+            if (isNamaJabatan) {
+                isi.add(daftar[1]);
+            } else {
+                isi.add(daftar[0]);
+            }
+        }
+        return isi;
     }
 }
