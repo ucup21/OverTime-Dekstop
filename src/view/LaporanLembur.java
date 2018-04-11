@@ -47,6 +47,7 @@ public class LaporanLembur extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         btnCetak = new javax.swing.JButton();
         nip = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -62,6 +63,13 @@ public class LaporanLembur extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setText("Cetak All");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -70,12 +78,15 @@ public class LaporanLembur extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btnCetak)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nip, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 257, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 372, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(37, 37, 37))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -83,9 +94,10 @@ public class LaporanLembur extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCetak)
-                    .addComponent(nip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addGap(16, 16, 16)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -93,56 +105,62 @@ public class LaporanLembur extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCetakActionPerformed
-        try {
-            String path = "view/LaporanDetail.jasper";
-            String driver = "oracle.jdbc.OracleDriver";
-            String konek = "jdbc:oracle:thin:@localhost:1521:XE";
-            String user = "system";
-            String password = "26september";
-            HashMap parameter = new HashMap();
-            Class.forName(driver);
-            Connection conn = DriverManager.getConnection(konek, user, password);
-            File reportFile = new File(path);
-            InputStream jReport = this.getClass().getClassLoader().getResourceAsStream(reportFile.getPath());
-            parameter.put("nip", Integer.parseInt(nip.getText()));
-//                JasperReport jReport = (JasperReport) JRLoader.loadObject(reportFile.getPath());
-            JasperPrint jPrint = JasperFillManager.fillReport(jReport, parameter, conn);
-//            JasperViewer.viewReport(jPrint, true);
-//            JasperViewer.setDefaultLookAndFeelDecorated(true);
-//        try {
-//            String path = "view/LaporanLemburPegawai.jasper";
-//            String driver = "oracle.jdbc.OracleDriver";
-//            String konek = "jdbc:oracle:thin:@localhost:1521:XE";
-//            String user = "system";
-//            String password = "26september";
-//            HashMap parameter = new HashMap();
-//            Class.forName(driver);
-//            Connection conn = DriverManager.getConnection(konek, user, password);
-//            File reportFile = new File(path);
-//            InputStream jReport = this.getClass().getClassLoader().getResourceAsStream(reportFile.getPath());
-////                JasperReport jReport = (JasperReport) JRLoader.loadObject(reportFile.getPath());
-////            JasperPrint jPrint = JasperFillManager.fillReport(jReport, parameter, conn);
-////            JasperViewer.viewReport(jPrint, true);
-////            JasperViewer.setDefaultLookAndFeelDecorated(true);
-////            
+       
+            try {
+                String path = "view/LaporanDetail.jasper";
+                String driver = "oracle.jdbc.OracleDriver";
+                String konek = "jdbc:oracle:thin:@localhost:1521:XE";
+                String user = "system";
+                String password = "26september";
+                HashMap parameter = new HashMap();
+                Class.forName(driver);
+                Connection conn = DriverManager.getConnection(konek, user, password);
+                File reportFile = new File(path);
+                InputStream jReport = this.getClass().getClassLoader().getResourceAsStream(reportFile.getPath());
+                parameter.put("nip", Integer.parseInt(nip.getText()));
+                JasperPrint jPrint = JasperFillManager.fillReport(jReport, parameter, conn);
 //            
-//            
-//            
-//            JasperPrint jp = JasperFillManager.fillReport(jReport, parameter,conn);
-            JRViewer jViewer = new JRViewer(jPrint);
-            jViewer.setOpaque(true);
-            jViewer.setVisible(true);
-            jScrollPane1.add(jViewer);
-            jScrollPane1.setViewportView(jViewer);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Laporan Tidak Dapat Dicetak!\n" + e.getMessage(),
-                    "Cetak Laporan", JOptionPane.ERROR_MESSAGE);
-        }
+                JRViewer jViewer = new JRViewer(jPrint);
+                jViewer.setOpaque(true);
+                jViewer.setVisible(true);
+                jScrollPane1.add(jViewer);
+                jScrollPane1.setViewportView(jViewer);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Laporan Tidak Dapat Dicetak!\n" + e.getMessage(),
+                        "Cetak Laporan", JOptionPane.ERROR_MESSAGE);
+            }
+        
     }//GEN-LAST:event_btnCetakActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+                String path = "view/LaporanLemburPegawai.jasper";
+                String driver = "oracle.jdbc.OracleDriver";
+                String konek = "jdbc:oracle:thin:@localhost:1521:XE";
+                String user = "system";
+                String password = "26september";
+                HashMap parameter = new HashMap();
+                Class.forName(driver);
+                Connection conn = DriverManager.getConnection(konek, user, password);
+                File reportFile = new File(path);
+                InputStream jReport = this.getClass().getClassLoader().getResourceAsStream(reportFile.getPath());
+
+                JasperPrint jp = JasperFillManager.fillReport(jReport, parameter, conn);
+                JRViewer jViewer = new JRViewer(jp);
+                jViewer.setOpaque(true);
+                jViewer.setVisible(true);
+                jScrollPane1.add(jViewer);
+                jScrollPane1.setViewportView(jViewer);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Laporan Tidak Dapat Dicetak!\n" + e.getMessage(),
+                        "Cetak Laporan", JOptionPane.ERROR_MESSAGE);
+            }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCetak;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nip;
     // End of variables declaration//GEN-END:variables
