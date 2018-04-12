@@ -16,16 +16,17 @@ import java.util.logging.Logger;
 public class Splash {
 
     public static void main(String[] args) {
-        OverTimeView otv = new OverTimeView();
+
         SplashScreen ss = new SplashScreen();
-       ss.setVisible(true);
+        ss.setVisible(true);
+        OverTimeView otv = new OverTimeView();
 
         try {
             for (int i = 0; i <= 100; i++) {
                 Thread.sleep(50);
                 ss.Time.setText(Integer.toString(i) + "%");
                 ss.ProgreesBar.setValue(i);
-                ss.ProgreesBar.setBounds(100,280,400,30);
+                ss.ProgreesBar.setBounds(100, 280, 400, 30);
                 if (i == 100) {
                     ss.setVisible(false);
                     otv.setVisible(true);
