@@ -31,7 +31,7 @@ public class PegawaiView extends javax.swing.JInternalFrame {
         initComponents();
         datas = new ArrayList<>();
         pc = new PegawaiController();
-        datas =  pc.bindingAll(tblPegawai, header);
+        datas = pc.bindingAll(tblPegawai, header);
         pc.loadJabatan(cmbJabatan);
         reset();
     }
@@ -48,6 +48,7 @@ public class PegawaiView extends javax.swing.JInternalFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
+        buttonGroup4 = new javax.swing.ButtonGroup();
         cmbKategori = new javax.swing.JComboBox<>();
         txtCari = new javax.swing.JTextField();
         btnCari = new javax.swing.JButton();
@@ -67,9 +68,10 @@ public class PegawaiView extends javax.swing.JInternalFrame {
         txtTempatLahir = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtAlamat = new javax.swing.JTextField();
-        txtJK = new javax.swing.JTextField();
         txtTglLahir = new com.toedter.calendar.JDateChooser();
         cmbJabatan = new javax.swing.JComboBox<>();
+        rbLaki = new javax.swing.JRadioButton();
+        rbPerem = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
 
         setClosable(true);
@@ -159,17 +161,17 @@ public class PegawaiView extends javax.swing.JInternalFrame {
             }
         });
 
-        txtJK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtJKActionPerformed(evt);
-            }
-        });
+        buttonGroup1.add(rbLaki);
+        rbLaki.setText("Laki-laki");
+
+        buttonGroup1.add(rbPerem);
+        rbPerem.setText("Perempuan");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -180,8 +182,12 @@ public class PegawaiView extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(txtNama, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNip, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtJK)
-                    .addComponent(cmbJabatan, 0, 144, Short.MAX_VALUE))
+                    .addComponent(cmbJabatan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(rbLaki)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rbPerem)
+                        .addGap(2, 2, 2)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
@@ -237,9 +243,10 @@ public class PegawaiView extends javax.swing.JInternalFrame {
                             .addComponent(txtTempatLahir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtJK, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rbLaki)
+                    .addComponent(rbPerem))
                 .addGap(60, 60, 60))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -291,7 +298,7 @@ public class PegawaiView extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -318,7 +325,13 @@ public class PegawaiView extends javax.swing.JInternalFrame {
         txtNip.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 1) + "");
         cmbJabatan.setSelectedItem(getCombo(true).get(tblPegawai.getSelectedRow()));
         txtNama.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 3) + "");
-        txtJK.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 4) + "");
+//        txtJK.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 4) + "");
+        String jk = "" + tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 4) + "";
+        if ("Perempuan".equals(jk)) {
+            rbPerem.setSelected(rootPaneCheckingEnabled);
+        }else {
+            rbLaki.setSelected(rootPaneCheckingEnabled);
+        }
         txtAlamat.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 5) + "");
         txtTglLahir.setDate((Date) tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 6));
         txtTempatLahir.setText(tblPegawai.getValueAt(tblPegawai.getSelectedRow(), 7) + "");
@@ -327,38 +340,13 @@ public class PegawaiView extends javax.swing.JInternalFrame {
         btnHapus.setEnabled(true);
     }//GEN-LAST:event_tblPegawaiMouseClicked
 
-    private void txtNipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNipActionPerformed
+    private void txtAlamatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAlamatActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNipActionPerformed
+    }//GEN-LAST:event_txtAlamatActionPerformed
 
-    private void txtNipKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNipKeyPressed
-        btnSimpan.setEnabled(true);
-        btnHapus.setEnabled(true);
-    }//GEN-LAST:event_txtNipKeyPressed
-
-    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
-        boolean hasil = false;
-        hasil = pc.save(txtNip.getText(), cmbJabatan.getSelectedItem().toString(),
-                txtNama.getText(), txtJK.getText(), txtAlamat.getText(),
-                txtTglLahir.getDate().getTime() + "", txtTempatLahir.getText(),
-                txtNip.isEnabled());
-//        String jenisKelamin = "Perempuan";
-//        if (this.rbLaki.isSelected()) {
-//            jenisKelamin = "Laki-laki";
-//        }
-//        hasil = pc.save(txtNip.getText(), cmbJabatan.getSelectedItem().toString(),
-//                txtNama.getText(), jenisKelamin, txtAlamat.getText(),
-//                txtTglLahir.getDate().getTime() + "", txtTempatLahir.getText(),
-//                txtNip.isEnabled());
-
-        String pesan = "Gagal menyimpan data";
-        if (hasil) {
-            pesan = "Berhasil menyimpan data";
-        }
-        JOptionPane.showMessageDialog(this, pesan);
-        datas= pc.bindingAll(tblPegawai, header);
-        reset();
-    }//GEN-LAST:event_btnSimpanActionPerformed
+    private void txtTempatLahirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTempatLahirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTempatLahirActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         int i = JOptionPane.showConfirmDialog(this, "Yakin Mau Dihapus?");
@@ -376,17 +364,37 @@ public class PegawaiView extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnHapusActionPerformed
 
-    private void txtAlamatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAlamatActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtAlamatActionPerformed
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        boolean hasil = false;
+        String jenisKelamin = "";
+        if (this.rbLaki.isSelected()) {
+            jenisKelamin = "Laki-laki";
+        }
+        else{
+            jenisKelamin = "Perempuan";
+        }
+        hasil = pc.save(txtNip.getText(), cmbJabatan.getSelectedItem().toString(),
+                txtNama.getText(), jenisKelamin, txtAlamat.getText(),
+                txtTglLahir.getDate().getTime() + "", txtTempatLahir.getText(),
+                txtNip.isEnabled());
 
-    private void txtTempatLahirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTempatLahirActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTempatLahirActionPerformed
+        String pesan = "Gagal menyimpan data";
+        if (hasil) {
+            pesan = "Berhasil menyimpan data";
+        }
+        JOptionPane.showMessageDialog(this, pesan);
+        datas = pc.bindingAll(tblPegawai, header);
+        reset();
+    }//GEN-LAST:event_btnSimpanActionPerformed
 
-    private void txtJKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtJKActionPerformed
+    private void txtNipKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNipKeyPressed
+        btnSimpan.setEnabled(true);
+        btnHapus.setEnabled(true);
+    }//GEN-LAST:event_txtNipKeyPressed
+
+    private void txtNipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNipActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtJKActionPerformed
+    }//GEN-LAST:event_txtNipActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -396,6 +404,7 @@ public class PegawaiView extends javax.swing.JInternalFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.ButtonGroup buttonGroup4;
     private javax.swing.JComboBox<String> cmbJabatan;
     private javax.swing.JComboBox<String> cmbKategori;
     private javax.swing.JLabel jLabel1;
@@ -408,10 +417,11 @@ public class PegawaiView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton rbLaki;
+    private javax.swing.JRadioButton rbPerem;
     private javax.swing.JTable tblPegawai;
     private javax.swing.JTextField txtAlamat;
     private javax.swing.JTextField txtCari;
-    private javax.swing.JTextField txtJK;
     private javax.swing.JTextField txtNama;
     private javax.swing.JTextField txtNip;
     private javax.swing.JTextField txtTempatLahir;
@@ -421,7 +431,7 @@ public class PegawaiView extends javax.swing.JInternalFrame {
         txtNip.setText("");
         txtNama.setText("");
         cmbJabatan.setSelectedIndex(0);
-        txtJK.setText("");
+        rbLaki.setSelected(true);
         txtAlamat.setText("");
         txtTglLahir.setDate(new Date());
         txtTempatLahir.setText("");
