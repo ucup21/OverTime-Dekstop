@@ -7,6 +7,8 @@ package view;
 
 import controller.DetailLemburController;
 import controller.JenisLemburController;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -20,11 +22,12 @@ import javax.swing.Timer;
  * @author Asus
  */
 public class DetailLemburView extends javax.swing.JInternalFrame {
-
+    
     private String header[] = {"NO", "Kode Detail Lembur", "Lama Lembur", "Nama Pegawai", "Tanggal Lembur"};
     private String[] headerTable = {"kd_detail_lembur",
         "kd_lembur", "nip", "tgl_lembur"};
     DetailLemburController dlc;
+    private boolean visible = false;
 
     /**
      * Creates new form DetailLembur
@@ -35,10 +38,23 @@ public class DetailLemburView extends javax.swing.JInternalFrame {
         dlc.bindingALL(tblDetilLembur, header);
         reset();
         txtTanggal.setText(getTanggal());
-        txtTanggal.setEnabled(false); 
+        txtTanggal.setEnabled(false);        
         txtKdLembur.setEnabled(false);
+        this.visible = false;
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (dim.width - getWidth()) / 2;
+        int y = (dim.height - getHeight()) / 2;
+        setLocation(x, y);
         getWaktu();
         setJam();
+    }
+    
+    public boolean getVisible() {
+        return visible;
+    }
+    
+    public void setStatusVisible(boolean visible) {
+        this.visible = visible;
     }
 
     /**
@@ -63,6 +79,7 @@ public class DetailLemburView extends javax.swing.JInternalFrame {
         txtTanggal = new javax.swing.JTextField();
         btnSimpan = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         cmbCari = new javax.swing.JComboBox<>();
         txtCari = new javax.swing.JTextField();
         btnCari = new javax.swing.JButton();
@@ -72,6 +89,24 @@ public class DetailLemburView extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosing(evt);
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameIconified(evt);
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         tblDetilLembur.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -112,6 +147,7 @@ public class DetailLemburView extends javax.swing.JInternalFrame {
             }
         });
 
+        btnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clipboard.png"))); // NOI18N
         btnSimpan.setText("SIMPAN");
         btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,10 +155,19 @@ public class DetailLemburView extends javax.swing.JInternalFrame {
             }
         });
 
-        btnHapus.setText("HAPUS");
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
+        btnHapus.setText("HAPUS ");
         btnHapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHapusActionPerformed(evt);
+            }
+        });
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/floor-mop.png"))); // NOI18N
+        jButton1.setText("BATAL ");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -150,14 +195,15 @@ public class DetailLemburView extends javax.swing.JInternalFrame {
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSimpan, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+                    .addComponent(btnSimpan, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -165,26 +211,28 @@ public class DetailLemburView extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(txtKdLembur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnSimpan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(txtKdLembur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(btnHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                            .addComponent(jLabel4)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnSimpan)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnHapus)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         cmbCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kode Detail Lembur", "Lama Lembur", "Nama Pegawai", "Tanggal Lembur" }));
 
-        btnCari.setText("Cari");
+        btnCari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/job-search.png"))); // NOI18N
+        btnCari.setText("CARI");
         btnCari.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCariActionPerformed(evt);
@@ -226,13 +274,13 @@ public class DetailLemburView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cmbCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCari))
+                            .addComponent(btnCari)
+                            .addComponent(txtCari))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -275,10 +323,10 @@ public class DetailLemburView extends javax.swing.JInternalFrame {
             String warning = "Maaf tidak bisa update silahkan hapus dan input ulang";
             JOptionPane.showMessageDialog(this, warning);
             
-        }else{
-        hasil = dlc.insert(txtDetilLembur.getText(), getKdLembur(),
-                 (Long.parseLong(txtNIP.getText())), date,
-                txtDetilLembur.isEnabled());
+        } else {
+            hasil = dlc.insert(txtDetilLembur.getText(), getKdLembur(),
+                    (Long.parseLong(txtNIP.getText())), date,
+                    txtDetilLembur.isEnabled());
         }
         String pesan = "Gagal menyimpan data";
         if (hasil) {
@@ -309,12 +357,25 @@ public class DetailLemburView extends javax.swing.JInternalFrame {
         btnHapus.setEnabled(true);
     }//GEN-LAST:event_txtDetilLemburKeyPressed
 
+    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+        setStatusVisible(false);
+    }//GEN-LAST:event_formInternalFrameClosing
+
+    private void formInternalFrameIconified(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameIconified
+        setStatusVisible(true);
+    }//GEN-LAST:event_formInternalFrameIconified
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        reset();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCari;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JComboBox<String> cmbCari;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -341,36 +402,36 @@ public class DetailLemburView extends javax.swing.JInternalFrame {
         btnHapus.setEnabled(false);
         getWaktu();
     }
-
+    
     private String getTanggal() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date date = new Date();
         return dateFormat.format(date);
     }
-
+    
     private String getJam() {
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
         Date time = new Date();
         return dateFormat.format(time);
     }
-
+    
     private void getWaktu() {
         String dateStart = "17:00:00";
         Date dateStop = new Date();
 
         //Konvert dalam bentuk 24 jam (00-23)
         DateFormat format = new SimpleDateFormat("HH:mm:ss");
-
+        
         Date d1 = null;
         Date d2 = null;
-
+        
         try {
             d1 = format.parse(dateStart);
             d2 = dateStop;
 
             //dalam milliseconds
             long milli = d2.getTime() - d1.getTime();
-
+            
             long detik = (milli / 1000) % 60;
             long menit = milli / (60 * 1000) % 60;
             long jam = milli / (60 * 60 * 1000) % 24;
@@ -385,17 +446,17 @@ public class DetailLemburView extends javax.swing.JInternalFrame {
             
             if (jam >= 4) {
                 jam = 4;
-            }else{
+            } else {
                 jam = jam;
             }
-
+            
             txtKdLembur.setText(jam + "");
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
+    
     private String getKdLembur() {
         String kdLembur;
         if (txtKdLembur.equals(1)) {
@@ -409,19 +470,19 @@ public class DetailLemburView extends javax.swing.JInternalFrame {
         }
         return kdLembur;
     }
-
+    
     public final void setJam() {
         ActionListener taskPerformer = new ActionListener() {
-
+            
             @Override
             public void actionPerformed(ActionEvent evt) {
                 String nol_jam = "", nol_menit = "", nol_detik = "";
-
+                
                 java.util.Date dateTime = new java.util.Date();
                 int nilai_jam = dateTime.getHours();
                 int nilai_menit = dateTime.getMinutes();
                 int nilai_detik = dateTime.getSeconds();
-
+                
                 if (nilai_jam <= 9) {
                     nol_jam = "0";
                 }
@@ -431,11 +492,11 @@ public class DetailLemburView extends javax.swing.JInternalFrame {
                 if (nilai_detik <= 9) {
                     nol_detik = "0";
                 }
-
+                
                 String jam = nol_jam + Integer.toString(nilai_jam);
                 String menit = nol_menit + Integer.toString(nilai_menit);
                 String detik = nol_detik + Integer.toString(nilai_detik);
-
+                
                 lblTime.setText(jam + ":" + menit + ":" + detik + "");
             }
         };

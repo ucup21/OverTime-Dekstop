@@ -26,6 +26,8 @@ public class DetailPK implements Serializable {
 
     public DetailPK() {
     }
+    
+    
 
     public DetailPK(String kdJabatan, String kdLembur) {
         this.kdJabatan = kdJabatan;

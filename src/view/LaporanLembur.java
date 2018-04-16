@@ -25,6 +25,7 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author hp
  */
 public class LaporanLembur extends javax.swing.JInternalFrame {
+    private boolean visible = false;
 
     /**
      * Creates new form LaporanLembur
@@ -33,6 +34,15 @@ public class LaporanLembur extends javax.swing.JInternalFrame {
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(dim.width, dim.height);
+        this.visible = false;
+    }
+    
+    public boolean getVisible() {
+        return visible;
+    }
+
+    public void setStatusVisible(boolean visible) {
+        this.visible = visible;
     }
 
     /**
@@ -54,6 +64,24 @@ public class LaporanLembur extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Laporan Lembur Pegawai");
         setPreferredSize(new java.awt.Dimension(617, 523));
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosing(evt);
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameIconified(evt);
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         btnCetak.setText("Cetak");
         btnCetak.addActionListener(new java.awt.event.ActionListener() {
@@ -99,7 +127,7 @@ public class LaporanLembur extends javax.swing.JInternalFrame {
                 String driver = "oracle.jdbc.OracleDriver";
                 String konek = "jdbc:oracle:thin:@localhost:1521:XE";
                 String user = "system";
-                String password = "26september";
+                String password = "password";
                 HashMap parameter = new HashMap();
                 Class.forName(driver);
                 Connection conn = DriverManager.getConnection(konek, user, password);
@@ -122,7 +150,7 @@ public class LaporanLembur extends javax.swing.JInternalFrame {
                 String driver = "oracle.jdbc.OracleDriver";
                 String konek = "jdbc:oracle:thin:@localhost:1521:XE";
                 String user = "system";
-                String password = "26september";
+                String password = "password";
                 HashMap parameter = new HashMap();
                 Class.forName(driver);
                 Connection conn = DriverManager.getConnection(konek, user, password);
@@ -142,6 +170,15 @@ public class LaporanLembur extends javax.swing.JInternalFrame {
             }
         }       
     }//GEN-LAST:event_btnCetakActionPerformed
+
+    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+        setStatusVisible(false);
+                
+    }//GEN-LAST:event_formInternalFrameClosing
+
+    private void formInternalFrameIconified(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameIconified
+        setStatusVisible(true);
+    }//GEN-LAST:event_formInternalFrameIconified
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

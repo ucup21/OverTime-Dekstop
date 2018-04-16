@@ -5,17 +5,51 @@
  */
 package view;
 
+import entities.DetailLembur;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+
 /**
  *
  * @author hp
  */
 public class OverTimeView extends javax.swing.JFrame {
 
+    PegawaiView pegawaiView;
+    JabatanView jabatanView;
+    DetailView detailView;
+    JenisLemburView jenisLemburView;
+    DetailLemburView detailLemburView; 
+    DetailLemburViaAdminView detailLemburViaAdminView;
+    LaporanLembur laporanLembur;
+
     /**
      * Creates new form OverTimeView
      */
     public OverTimeView() {
         initComponents();
+        pegawaiView = new PegawaiView();
+        jabatanView = new JabatanView();
+        detailView = new DetailView();
+        jenisLemburView = new JenisLemburView();
+        detailLemburView = new DetailLemburView();
+        laporanLembur = new LaporanLembur();
+        detailLemburViaAdminView = new DetailLemburViaAdminView();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setSize(dim.width, dim.height);
+
     }
 
     /**
@@ -40,9 +74,11 @@ public class OverTimeView extends javax.swing.JFrame {
         menujabatan = new javax.swing.JMenuItem();
         menuLembur = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        menuLemburKaryawan = new javax.swing.JMenuItem();
         menuDetailLembur = new javax.swing.JMenuItem();
         menuDetailLemburJabatan = new javax.swing.JMenuItem();
-        jMenu8 = new javax.swing.JMenu();
+        menuReport = new javax.swing.JMenu();
+        laporanLemburPegawai = new javax.swing.JMenuItem();
 
         jMenu3.setText("jMenu3");
 
@@ -55,7 +91,6 @@ public class OverTimeView extends javax.swing.JFrame {
         jMenu6.setText("jMenu6");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(697, 647));
 
         jDesktopPane1.setPreferredSize(new java.awt.Dimension(697, 634));
 
@@ -63,7 +98,7 @@ public class OverTimeView extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 795, Short.MAX_VALUE)
+            .addGap(0, 952, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,6 +138,14 @@ public class OverTimeView extends javax.swing.JFrame {
 
         jMenu2.setText("Transaksi");
 
+        menuLemburKaryawan.setText("Detail Lembur (Karyawan)");
+        menuLemburKaryawan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuLemburKaryawanActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuLemburKaryawan);
+
         menuDetailLembur.setText("Detail Lembur");
         menuDetailLembur.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,8 +164,22 @@ public class OverTimeView extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
-        jMenu8.setText("Report");
-        jMenuBar1.add(jMenu8);
+        menuReport.setText("Laporan");
+        menuReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuReportActionPerformed(evt);
+            }
+        });
+
+        laporanLemburPegawai.setText("Laporan Lembur Pegawai");
+        laporanLemburPegawai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                laporanLemburPegawaiActionPerformed(evt);
+            }
+        });
+        menuReport.add(laporanLemburPegawai);
+
+        jMenuBar1.add(menuReport);
 
         setJMenuBar(jMenuBar1);
 
@@ -130,7 +187,7 @@ public class OverTimeView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 795, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 952, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,34 +198,64 @@ public class OverTimeView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuPegawaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPegawaiActionPerformed
-        PegawaiView pv = new PegawaiView();
-        pv.show();
-        jDesktopPane1.add(pv);
+        if (!pegawaiView.getVisible() && !pegawaiView.isShowing()) {
+            pegawaiView = new PegawaiView();
+            jDesktopPane1.add(pegawaiView);
+            pegawaiView.setVisible(true);
+        }
     }//GEN-LAST:event_menuPegawaiActionPerformed
 
     private void menuLemburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLemburActionPerformed
-        JenisLemburView jlv = new JenisLemburView();
-        jlv.show();
-        jDesktopPane1.add(jlv);
+        if (!jenisLemburView.getVisible() && !jenisLemburView.isShowing()) {
+            jenisLemburView = new JenisLemburView();
+            jDesktopPane1.add(jenisLemburView);
+            jenisLemburView.setVisible(true);
+        }
     }//GEN-LAST:event_menuLemburActionPerformed
 
     private void menujabatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menujabatanActionPerformed
-        JabatanView jv = new JabatanView();
-        jv.show();
-        jDesktopPane1.add(jv);
+        if (!jabatanView.getVisible() && !jabatanView.isShowing()) {
+            jabatanView = new JabatanView();
+            jDesktopPane1.add(jabatanView);
+            jabatanView.setVisible(true);
+        }
     }//GEN-LAST:event_menujabatanActionPerformed
 
     private void menuDetailLemburJabatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDetailLemburJabatanActionPerformed
-        DetailView detailView = new DetailView();
-        detailView.show();
-        jDesktopPane1.add(detailView);
+        if (!detailView.getVisible() && !detailView.isShowing()) {
+            detailView = new DetailView();
+            jDesktopPane1.add(detailView);
+            detailView.setVisible(true);
+        }
     }//GEN-LAST:event_menuDetailLemburJabatanActionPerformed
 
     private void menuDetailLemburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDetailLemburActionPerformed
-        DetailLemburView dlv = new DetailLemburView();
-        dlv.show();
-        jDesktopPane1.add(dlv);
+        if (!detailLemburViaAdminView.getVisible() && !detailLemburViaAdminView.isShowing()) {
+            detailLemburViaAdminView = new DetailLemburViaAdminView();
+            jDesktopPane1.add(detailLemburViaAdminView);
+            detailLemburViaAdminView.setVisible(true);
+        }
     }//GEN-LAST:event_menuDetailLemburActionPerformed
+
+    private void menuReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReportActionPerformed
+
+    }//GEN-LAST:event_menuReportActionPerformed
+
+    private void laporanLemburPegawaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laporanLemburPegawaiActionPerformed
+        if (!laporanLembur.getVisible() && !laporanLembur.isShowing()) {
+            laporanLembur = new LaporanLembur();
+            jDesktopPane1.add(laporanLembur);
+            laporanLembur.setVisible(true);
+        }
+    }//GEN-LAST:event_laporanLemburPegawaiActionPerformed
+
+    private void menuLemburKaryawanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLemburKaryawanActionPerformed
+        if (!detailLemburView.getVisible() && !detailLemburView.isShowing()) {
+            detailLemburView = new DetailLemburView();
+            jDesktopPane1.add(detailLemburView);
+            detailLemburView.setVisible(true);
+        }
+    }//GEN-LAST:event_menuLemburKaryawanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,6 +285,17 @@ public class OverTimeView extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        LaunchProgressBar pb = new LaunchProgressBar();
+        pb.setVisible(true);
+        for (int i = 0; i <= 100; i++) {
+            try {
+                pb.getProgressBar().setValue(i);
+                Thread.sleep(25);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(LaunchProgressBar.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        pb.dispose();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new OverTimeView().setVisible(true);
@@ -214,13 +312,15 @@ public class OverTimeView extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
-    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem laporanLemburPegawai;
     private javax.swing.JMenuItem menuDetailLembur;
     private javax.swing.JMenuItem menuDetailLemburJabatan;
     private javax.swing.JMenuItem menuLembur;
+    private javax.swing.JMenuItem menuLemburKaryawan;
     private javax.swing.JMenuItem menuPegawai;
+    private javax.swing.JMenu menuReport;
     private javax.swing.JMenuItem menujabatan;
     // End of variables declaration//GEN-END:variables
 }
